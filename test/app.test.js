@@ -51,5 +51,12 @@ describe('tests Owner class', () => {
             .send(updatedTestOwner);
 
         expect(response.body).toEqual(updatedTestOwner);
+    });
+
+    it('tests .delete /owner, returns updatedTestOwner', async () => {
+        const response = await fakeRequest(app)
+            .delete(`/owner/${updatedTestOwner.id}`)
+
+        expect(response.body).toEqual(updatedTestOwner);
     })
 })
