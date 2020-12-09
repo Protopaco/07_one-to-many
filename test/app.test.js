@@ -17,6 +17,14 @@ const updatedTestOwner = {
     bald: false
 }
 
+const testDog = {
+    id: '1',
+    dog_name: 'Paco',
+    breed: 'Chihuahua',
+    dog_age: 6,
+    owner_id: '1'
+}
+
 describe('tests server listener', () => {
     it('tests /test endpoint', async () => {
         const response = await fakeRequest(app).get('/test');
@@ -29,6 +37,8 @@ describe('tests Owner class', () => {
     beforeAll(async () => {
         await pool.query(fs.readFileSync('./data/setup.sql', 'utf-8'));
     });
+
+
 
     it('tests .post /owner, returns testOwner', async () => {
         const response = await fakeRequest(app)
@@ -59,4 +69,25 @@ describe('tests Owner class', () => {
 
         expect(response.body).toEqual(updatedTestOwner);
     })
-})
+});
+
+describe('tests Dog class', () => {
+    beforeAll(async () => {
+        await pool.query(fs.readFileSync('./data/setup.sql', 'utf-8'));
+        await fakeRequest(app)
+            .post('/owner')
+            .send(testOwner);
+    });
+    afterAll(async () => {
+        await pool.end();
+    })
+
+    it('tests .post /dog, returns testDog', async () => {
+        const response = await fakeRequest(app)
+            .post('/dog')
+            .send(testDog);
+
+        expect(response.body).toEqual(testDog);
+    })
+
+});
