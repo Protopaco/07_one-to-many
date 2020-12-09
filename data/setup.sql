@@ -1,0 +1,8 @@
+DROP TABLE IF EXISTS owners;
+
+CREATE TABLE owners (
+    id BIGINT GENERATED ALWAYS AS IDENTITY,
+    owner_name TEXT NOT NULL,
+    age INTEGER NOT NULL,
+    bald BOOLEAN NOT NULL
+)
