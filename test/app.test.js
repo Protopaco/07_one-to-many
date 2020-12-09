@@ -10,6 +10,13 @@ const testOwner = {
     bald: true
 }
 
+const updatedTestOwner = {
+    id: '1',
+    owner_name: 'Paul',
+    age: 40,
+    bald: false
+}
+
 describe('tests server listener', () => {
     it('tests /test endpoint', async () => {
         const response = await fakeRequest(app).get('/test');
@@ -36,5 +43,13 @@ describe('tests Owner class', () => {
             .get('/owner');
 
         expect(response.body).toEqual([testOwner]);
+    })
+
+    it('tests .put /owner, returns updatedTestOwner', async () => {
+        const response = await fakeRequest(app)
+            .put(`/owner/${updatedTestOwner.id}`)
+            .send(updatedTestOwner);
+
+        expect(response.body).toEqual(updatedTestOwner);
     })
 })
