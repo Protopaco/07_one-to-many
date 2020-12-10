@@ -100,6 +100,13 @@ describe('tests Dog class', () => {
         expect(response.body).toEqual(updatedTestDog)
     })
 
+    it('tests .delete /dog, returns updatedTestDog', async () => {
+        const response = await fakeRequest(app)
+            .delete(`/dog/${updatedTestDog.id}`)
+
+        expect(response.body).toEqual(updatedTestDog);
+    })
+
     // it('tests .post /dog, returns testDog', async () => {
     //     const { body } = await Promise.all(
     //         testDogs.map(dog =>
