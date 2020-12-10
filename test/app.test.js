@@ -2,28 +2,7 @@ const fakeRequest = require('supertest');
 const app = require('../lib/app.js');
 const pool = require('../lib/utils/pool.js');
 const fs = require('fs');
-
-const testOwner = {
-    id: '1',
-    owner_name: 'Paul',
-    age: 40,
-    bald: true
-}
-
-const updatedTestOwner = {
-    id: '1',
-    owner_name: 'Paul',
-    age: 40,
-    bald: false
-}
-
-const testDog = {
-    id: '1',
-    dog_name: 'Paco',
-    breed: 'Chihuahua',
-    dog_age: 6,
-    owner_id: '1'
-}
+const { testOwner, updatedTestOwner, testDogs } = require('./testJSON.js')
 
 describe('tests server listener', () => {
     it('tests /test endpoint', async () => {
@@ -85,9 +64,44 @@ describe('tests Dog class', () => {
     it('tests .post /dog, returns testDog', async () => {
         const response = await fakeRequest(app)
             .post('/dog')
-            .send(testDog);
+            .send(testDogs[0]);
 
-        expect(response.body).toEqual(testDog);
+        expect(response.body).toEqual(testDogs[0]);
     })
+
+    it('tests .post /dog, returns testDog2', async () => {
+        const response = await fakeRequest(app)
+            .post('/dog')
+            .send(testDogs[1]);
+
+        expect(response.body).toEqual(testDogs[1]);
+    })
+
+    it('tests .post /dog, returns testDog3', async () => {
+        const response = await fakeRequest(app)
+            .post('/dog')
+            .send(testDogs[2]);
+
+        expect(response.body).toEqual(testDogs[2]);
+    })
+
+    it('tests .get /dog, returns [testDogs]', async () => {
+        const response = await fakeRequest(app)
+            .get('/dog');
+
+        expect(response.body).toEqual(testDogs);
+    });
+
+    // it('tests .post /dog, returns testDog', async () => {
+    //     const { body } = await Promise.all(
+    //         testDogs.map(dog =>
+    //             fakeRequest(app)
+    //                 .post('/dog')
+    //                 .send(dog)));
+
+    //     console.log(body)
+    //     expect(testDogs).toEqual(expect.arrayContaining(response));
+    // })
+
 
 });
