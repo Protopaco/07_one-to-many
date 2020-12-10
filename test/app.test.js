@@ -62,28 +62,17 @@ describe('tests Dog class', () => {
     })
 
     it('tests .post /dog, returns testDog', async () => {
-        const response = await fakeRequest(app)
-            .post('/dog')
-            .send(testDogs[0]);
+        const response = await Promise.all(
+            testDogs.map(dog =>
+                fakeRequest(app)
+                    .post('/dog')
+                    .send(dog)));
 
-        expect(response.body).toEqual(testDogs[0]);
+        const responseBody = response.map(respons => { return respons.body });
+
+        expect(responseBody).toEqual(expect.arrayContaining(testDogs));
     })
 
-    it('tests .post /dog, returns testDog2', async () => {
-        const response = await fakeRequest(app)
-            .post('/dog')
-            .send(testDogs[1]);
-
-        expect(response.body).toEqual(testDogs[1]);
-    })
-
-    it('tests .post /dog, returns testDog3', async () => {
-        const response = await fakeRequest(app)
-            .post('/dog')
-            .send(testDogs[2]);
-
-        expect(response.body).toEqual(testDogs[2]);
-    })
 
     it('tests .get /dog, returns [testDogs]', async () => {
         const response = await fakeRequest(app)
@@ -125,16 +114,6 @@ describe('tests Dog class', () => {
         expect(response.body).toEqual(updatedTestDog);
     })
 
-    // it('tests .post /dog, returns testDog', async () => {
-    //     const { body } = await Promise.all(
-    //         testDogs.map(dog =>
-    //             fakeRequest(app)
-    //                 .post('/dog')
-    //                 .send(dog)));
-
-    //     console.log(body)
-    //     expect(testDogs).toEqual(expect.arrayContaining(response));
-    // })
 
 
 });
