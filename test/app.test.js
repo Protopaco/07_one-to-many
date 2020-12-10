@@ -92,6 +92,13 @@ describe('tests Dog class', () => {
         expect(response.body).toEqual(testDogs);
     });
 
+    it('tests .get /owner/id, returns testOwner', async () => {
+        const response = await fakeRequest(app)
+            .get(`/owner/${testOwner.id}`)
+
+        expect(response.body).toEqual({ ...testOwner, dogs: expect.arrayContaining(testDogs) });
+    });
+
     it('tests .update /dog, returns updatedTestDog', async () => {
         const response = await fakeRequest(app)
             .put(`/dog/${updatedTestDog.id}`)
