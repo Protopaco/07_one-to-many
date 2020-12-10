@@ -2,7 +2,7 @@ const fakeRequest = require('supertest');
 const app = require('../lib/app.js');
 const pool = require('../lib/utils/pool.js');
 const fs = require('fs');
-const { testOwner, updatedTestOwner, testDogs } = require('./testJSON.js')
+const { testOwner, updatedTestOwner, testDogs, updatedTestDog } = require('./testJSON.js')
 
 describe('tests server listener', () => {
     it('tests /test endpoint', async () => {
@@ -91,6 +91,14 @@ describe('tests Dog class', () => {
 
         expect(response.body).toEqual(testDogs);
     });
+
+    it('tests .update /dog, returns updatedTestDog', async () => {
+        const response = await fakeRequest(app)
+            .put(`/dog/${updatedTestDog.id}`)
+            .send(updatedTestDog)
+
+        expect(response.body).toEqual(updatedTestDog)
+    })
 
     // it('tests .post /dog, returns testDog', async () => {
     //     const { body } = await Promise.all(

@@ -35,4 +35,12 @@ const testDogs = [{
     owner_id: '1'
 }];
 
-module.exports = { testOwner, updatedTestOwner, testDogs };
+const updatedTestDog = {
+    id: '1',
+    dog_name: 'Paco',
+    breed: 'Chihuahua',
+    dog_age: 7,
+    owner_id: '1'
+}
+
+module.exports = { testOwner, updatedTestOwner, testDogs, updatedTestDog };
